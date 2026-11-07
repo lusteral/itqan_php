@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{ site_settings.get('site_name', 'إتقان | المنصة التعليمية') if site_settings else 'إتقان | المنصة التعليمية' }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #FFFFFF;
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        img, svg, video {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        #splash-screen {
+            position: fixed; inset: 0; background: #ffffff; z-index: 99999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .draw-path {
+            stroke-dasharray: 1000; stroke-dashoffset: 1000;
+            animation: drawLine 1.6s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+        }
+
+        .draw-path-delay {
+            stroke-dasharray: 600; stroke-dashoffset: 600;
+            animation: drawLine 1.4s cubic-bezier(0.65, 0, 0.35, 1) 0.3s forwards;
+        }
+
+        .fill-fade { opacity: 0; animation: fillFadeIn 0.6s ease 1.1s forwards; }
+        @keyframes drawLine { to { stroke-dashoffset: 0; } }
+        @keyframes fillFadeIn { to { opacity: 1; } }
+
+        .bravo-teal-btn {
+            background-color: #4AD7C5; border: 2px solid #0F172A;
+            box-shadow: 0 4px 0 #0F172A; transition: all 0.1s ease;
+        }
+        .bravo-teal-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #0F172A; }
+
+        .bravo-yellow-btn {
+            background-color: #F8CD46; border: 2px solid #0F172A;
+            box-shadow: 0 4px 0 #0F172A; transition: all 0.1s ease;
+        }
+        .bravo-yellow-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #0F172A; }
+
+        .bravo-whatsapp-btn {
+            background-color: #25D366; color: #FFFFFF; border: 2px solid #0F172A;
+            box-shadow: 0 4px 0 #0F172A; transition: all 0.1s ease;
+        }
+        .bravo-whatsapp-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #0F172A; }
+
+        .bravo-red-btn {
+            background-color: #E11D48; border: 2px solid #0F172A; box-shadow: 0 4px 0 #0F172A;
+        }
+
+        /* تحريك شريط الإعلانات الاحترافي */
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 25s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        /* نبض زر الواتساب */
+        @keyframes whatsappPulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6), 0 4px 0 #0f172a; }
+            70% { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0), 0 4px 0 #0f172a; }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0), 0 4px 0 #0f172a; }
+        }
+        .whatsapp-pulse-btn {
+            animation: whatsappPulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="text-slate-900 min-h-screen flex flex-col justify-between">
+    {% set wa_num = site_settings.get('whatsapp_number', '966593521664') if site_settings else '966593521664' %}
+
+    <div id="splash-screen">
+        <div class="relative w-40 sm:w-48 h-40 sm:h-48 flex items-center justify-center">
+            <svg class="w-full h-full" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="draw-path" d="M100 25 L160 55 V110 C160 148 100 178 100 178 C100 178 40 148 40 110 V55 Z" stroke="#0B4B80" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path class="draw-path-delay" d="M100 45 L145 65 L100 85 L55 65 Z" stroke="#4AD7C5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                <ellipse class="draw-path" cx="100" cy="115" rx="55" ry="18" stroke="#F59E0B" stroke-width="4" transform="rotate(-15 100 115)"/>
+                <path class="draw-path-delay" d="M60 140 C80 135 100 145 100 145 C100 145 120 135 140 140" stroke="#0B4B80" stroke-width="5" stroke-linecap="round"/>
+                <text class="fill-fade" x="100" y="195" text-anchor="middle" font-family="'Tajawal', sans-serif" font-size="20" font-weight="900" fill="#0B4B80">إتـقـان</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- ⚡ بنر الشريط الإعلاني الاحترافي المتقدم -->
+    <div id="promo-banner" class="bg-gradient-to-r from-amber-400 via-amber-300 to-emerald-300 text-slate-950 py-2 px-3 sm:px-4 text-xs font-black shadow-sm relative overflow-hidden border-b border-amber-400">
+        <div class="max-w-7xl mx-auto w-full flex items-center justify-between gap-2 sm:gap-4">
+            <div class="flex items-center gap-1.5 shrink-0">
+                <span class="bg-slate-900 text-amber-300 text-[10px] font-black px-2.5 py-0.5 rounded-full border border-amber-400 shadow-xs animate-pulse">{{ site_settings.get('promo_badge', '🔥 عروض حصريّة') if site_settings else '🔥 عروض حصريّة' }}</span>
+                <span class="hidden md:inline-block font-black text-slate-900 text-xs">{{ site_settings.get('promo_discount', 'خصم 20% لفترة محدودة') if site_settings else 'خصم 20% لفترة محدودة' }}</span>
+            </div>
+
+            <div class="overflow-hidden relative flex-grow text-center font-bold text-[11px] sm:text-[12px] text-slate-900 mx-1 sm:mx-2 min-w-0">
+                <div class="inline-flex items-center gap-6 animate-marquee">
+                    {% if ticker_ads %}
+                        {% for t in ticker_ads %}
+                            <span>{{ t['title'] }}</span>
+                        {% endfor %}
+                    {% else %}
+                        <span>⚡ تصفح الملازم والأعمال الفصلية والمشاريع الاحترافية المميزة لجميع الكليات!</span>
+                        <span>🎓 تواصل معنا مباشرة عبر الواتساب للحصول على استشارة أو حل واجب خاص 📲</span>
+                        <span>⭐ ضمان جودة الشروحات الأكاديمية أعلى الدرجات A+</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="hidden sm:flex items-center gap-2 shrink-0">
+                <a href="https://wa.me/{{ wa_num }}" target="_blank" class="bg-slate-900 hover:bg-slate-800 text-white text-[11px] font-black px-3 py-1 rounded-full flex items-center gap-1.5 shadow-xs transition">
+                    <svg class="w-3.5 h-3.5 fill-[#25D366]" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                    <span>طلب بالواتساب</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- شريط التنقل العلوي الثابت المتجاوب -->
+    <nav class="bg-white sticky top-0 z-40 border-b border-slate-100 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- الشعار -->
+                <div class="flex items-center gap-2">
+                    <a href="/" class="flex items-center gap-1 font-black text-xl text-[#0B4B80] tracking-tighter">
+                        <span>ITQAN</span>
+                        <span class="text-xs bg-[#4AD7C5] px-1.5 py-0.5 rounded-md border border-slate-900 text-slate-900 font-black">Me</span>
+                    </a>
+                </div>
+
+                <!-- الروابط للشاشات المتوسطة والكبيرة -->
+                <div class="hidden md:flex items-center gap-1">
+                    <a href="/" class="px-3 py-2 text-xs font-bold text-slate-700 hover:text-teal-600 hover:bg-slate-50 rounded-full transition">الرئيسية</a>
+                    <a href="/semester-works" class="px-3 py-2 text-xs font-bold text-slate-700 hover:text-teal-600 hover:bg-slate-50 rounded-full transition">الأعمال والواجبات</a>
+                    <a href="/#unis" class="px-3 py-2 text-xs font-bold text-slate-700 hover:text-teal-600 hover:bg-slate-50 rounded-full transition">الجامعات</a>
+                    <a href="/#courses" class="px-3 py-2 text-xs font-bold text-slate-700 hover:text-teal-600 hover:bg-slate-50 rounded-full transition">المواد</a>
+                    <a href="/instructor/1" class="px-3 py-2 text-xs font-bold text-slate-700 hover:text-teal-600 hover:bg-slate-50 rounded-full transition">عن الأكاديمية</a>
+                </div>
+
+                <!-- الأزرار وزر قائمة الهاتف -->
+                <div class="flex items-center gap-2">
+                    <a href="https://wa.me/{{ wa_num }}" target="_blank" class="flex items-center gap-1.5 text-xs font-black text-slate-900 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 px-3 py-1.5 rounded-full transition shadow-xs">
+                        <svg class="w-4 h-4 fill-[#25D366]" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                        <span class="hidden sm:inline">تواصل واتساب</span>
+                    </a>
+
+                    <!-- زر فتح قائمة الهاتف للهواتف الذكية -->
+                    <button type="button" onclick="toggleMobileNav()" class="md:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 transition focus:outline-none" aria-label="فتح القائمة">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- قائمة الهاتف المنسدلة بتصميم سلس -->
+            <div id="mobileNavMenu" class="hidden md:hidden border-t border-slate-100 py-3 space-y-1">
+                <a href="/" onclick="toggleMobileNav()" class="block px-4 py-2.5 rounded-xl text-xs font-bold text-slate-800 hover:bg-teal-50 hover:text-teal-700 transition">🏠 الرئيسية</a>
+                <a href="/semester-works" onclick="toggleMobileNav()" class="block px-4 py-2.5 rounded-xl text-xs font-bold text-slate-800 hover:bg-teal-50 hover:text-teal-700 transition">📝 الأعمال والواجبات والمشاريع</a>
+                <a href="/#unis" onclick="toggleMobileNav()" class="block px-4 py-2.5 rounded-xl text-xs font-bold text-slate-800 hover:bg-teal-50 hover:text-teal-700 transition">🏛️ الجامعات المعتمدة</a>
+                <a href="/#courses" onclick="toggleMobileNav()" class="block px-4 py-2.5 rounded-xl text-xs font-bold text-slate-800 hover:bg-teal-50 hover:text-teal-700 transition">📚 المواد والمقررات</a>
+                <a href="/instructor/1" onclick="toggleMobileNav()" class="block px-4 py-2.5 rounded-xl text-xs font-bold text-slate-800 hover:bg-teal-50 hover:text-teal-700 transition">🎓 عن الأكاديمية والمحاضرين</a>
+                <div class="pt-2 border-t border-slate-100 px-2 flex gap-2">
+                    <a href="https://wa.me/{{ wa_num }}" target="_blank" class="flex-grow bg-[#25D366] text-white text-center py-2.5 rounded-xl text-xs font-black flex items-center justify-center gap-1.5 shadow-sm">
+                        <span>محادثة واتساب 📲</span>
+                    </a>
+                    <a href="/admin" class="bg-slate-900 text-amber-300 py-2.5 px-3.5 rounded-xl text-xs font-black text-center">
+                        لوحة الإدارة 🔐
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 🖼️ عرض السلايدر الرئيسي بالمساحة الكاملة لعرض الشاشة (Full-Width Showcase Slider) -->
+    <section class="w-full relative overflow-hidden bg-slate-950 border-b border-slate-800">
+        <!-- شريط علوي شفاف فوق العرض (يظهر في الشاشات الكبيرة لتفادي التداخل في الهاتف) -->
+        <div class="hidden md:block absolute top-0 inset-x-0 z-20 bg-gradient-to-b from-slate-950/85 via-slate-950/40 to-transparent pointer-events-none">
+            <div class="max-w-7xl mx-auto px-4 sm:px-8 py-4 flex items-center justify-between flex-wrap gap-3 pointer-events-auto">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-2xl bg-amber-400 text-slate-950 flex items-center justify-center font-black text-xl shadow-md border-2 border-amber-300">
+                        إ
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1 font-black text-xl sm:text-2xl text-white tracking-tighter">
+                            <span>ITQAN</span>
+                            <span class="text-xs bg-[#4AD7C5] px-2 py-0.5 rounded-md border border-slate-900 text-slate-900 font-black">Me</span>
+                        </div>
+                        <span class="text-xs font-bold text-amber-300 block">{{ site_settings.get('slider_title', 'منصة إتقان للأعمال والمشاريع الأكاديمية') if site_settings else 'منصة إتقان للأعمال والمشاريع الأكاديمية' }}</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="bg-slate-900/70 backdrop-blur-md text-teal-300 text-xs font-bold px-4 py-1.5 rounded-full border border-teal-500/40">
+                        {{ site_settings.get('slider_badge', 'معرض صور المشاريع 📸') if site_settings else 'معرض صور المشاريع 📸' }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- سلايدر صور المشاريع متجاوب للهواتف -->
+        <div class="relative w-full overflow-hidden bg-slate-950">
+            <div id="projectCarousel" class="flex transition-transform duration-500 ease-out w-full">
+                {% if slider_ads %}
+                    {% for s in slider_ads %}
+                    <div class="w-full flex-shrink-0 relative h-[310px] sm:h-[400px] md:h-[500px]">
+                        {% set img_src = s['image_url'] if s['image_url'].startswith('http') else ('/uploads/' + s['image_url'] if s['image_url'] else 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80') %}
+                        <img src="{{ img_src }}" alt="{{ s['title'] }}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/20 flex flex-col justify-end">
+                            <div class="max-w-7xl mx-auto w-full px-4 sm:px-8 pb-9 sm:pb-14 flex flex-col md:flex-row md:items-end justify-between gap-3">
+                                <div class="max-w-2xl">
+                                    {% if s['badge'] %}
+                                    <span class="bg-amber-400 text-slate-950 text-[10px] sm:text-xs font-black px-3 py-0.5 rounded-full inline-block mb-1.5 shadow-sm">{{ s['badge'] }}</span>
+                                    {% endif %}
+                                    <h3 class="text-base sm:text-2xl md:text-3xl font-black text-white leading-snug">{{ s['title'] }}</h3>
+                                    {% if s['subtitle'] %}
+                                    <p class="text-xs sm:text-sm text-slate-200 font-bold mt-1 line-clamp-2">{{ s['subtitle'] }}</p>
+                                    {% endif %}
+                                </div>
+                                <a href="https://wa.me/{{ wa_num }}" target="_blank" class="bravo-whatsapp-btn w-fit px-5 py-2.5 rounded-full font-black text-xs sm:text-sm flex items-center gap-2 shadow-lg shrink-0">
+                                    <svg class="w-4 h-4 fill-white shrink-0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                                    <span>اطلب عبر الواتساب</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="w-full flex-shrink-0 relative h-[310px] sm:h-[400px] md:h-[500px]">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80" alt="تطوير المواقع والدراسات" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/20 flex flex-col justify-end">
+                            <div class="max-w-7xl mx-auto w-full px-4 sm:px-8 pb-9 sm:pb-14">
+                                <span class="bg-amber-400 text-slate-950 text-[10px] sm:text-xs font-black px-3 py-0.5 rounded-full inline-block mb-1.5">💻 برمجة وتطوير Web Apps</span>
+                                <h3 class="text-base sm:text-2xl md:text-3xl font-black text-white">تصميم وتطوير لوحات التحكم والمواقع المتكاملة</h3>
+                                <p class="text-xs sm:text-sm text-slate-200 font-bold mt-1">أنظمة Full-Stack بكود مصدري منظم وتصميم تجاوبي معتمد</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- أزرار التنقل بين الصور بتصميم مصغر للهاتف -->
+            <button onclick="prevSlide()" class="absolute top-1/2 right-2 sm:right-6 -translate-y-1/2 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-slate-900/80 hover:bg-amber-400 hover:text-slate-950 text-white font-black text-sm sm:text-xl flex items-center justify-center backdrop-blur-md border border-white/20 transition shadow-lg z-20">
+                &rsaquo;
+            </button>
+            <button onclick="nextSlide()" class="absolute top-1/2 left-2 sm:left-6 -translate-y-1/2 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-slate-900/80 hover:bg-amber-400 hover:text-slate-950 text-white font-black text-sm sm:text-xl flex items-center justify-center backdrop-blur-md border border-white/20 transition shadow-lg z-20">
+                &lsaquo;
+            </button>
+
+            <!-- مؤشرات الدوائر السفلية -->
+            <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20">
+                {% set slide_count = (slider_ads|length) if slider_ads else 1 %}
+                {% for i in range(slide_count) %}
+                <span onclick="goToSlide({{ i }})" class="slide-dot w-2.5 h-2.5 rounded-full {{ 'bg-amber-400' if i == 0 else 'bg-white/40' }} cursor-pointer transition"></span>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {% if banner_ads %}
+    <div class="max-w-7xl mx-auto px-4 pt-6 w-full">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% for b in banner_ads %}
+            {% set b_img = b['image_url'] if b['image_url'].startswith('http') else ('/uploads/' + b['image_url'] if b['image_url'] else '') %}
+            <a href="{{ b['link_url'] or ('https://wa.me/' + wa_num) }}" target="_blank" class="block relative rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition group">
+                {% if b_img %}
+                <img src="{{ b_img }}" alt="{{ b['title'] }}" class="w-full h-36 sm:h-40 object-cover group-hover:scale-105 transition duration-300">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent flex flex-col justify-end p-4 text-white">
+                    {% if b['badge'] %}<span class="bg-amber-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full w-fit mb-1">{{ b['badge'] }}</span>{% endif %}
+                    <h4 class="font-black text-sm sm:text-base">{{ b['title'] }}</h4>
+                    {% if b['subtitle'] %}<p class="text-[11px] text-slate-200">{{ b['subtitle'] }}</p>{% endif %}
+                </div>
+                {% else %}
+                <div class="bg-gradient-to-r from-[#0B4B80] to-teal-600 p-4 sm:p-5 text-white">
+                    {% if b['badge'] %}<span class="bg-amber-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full inline-block mb-1">{{ b['badge'] }}</span>{% endif %}
+                    <h4 class="font-black text-sm sm:text-base">{{ b['title'] }}</h4>
+                    {% if b['subtitle'] %}<p class="text-xs text-slate-100 mt-1">{{ b['subtitle'] }}</p>{% endif %}
+                </div>
+                {% endif %}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <main class="flex-grow w-full">
+        {{ content|safe }}
+    </main>
+
+    <!-- 🟢 زر تواصل الواتساب العائم الاحترافي الرسمي -->
+    <a href="https://wa.me/{{ wa_num }}" target="_blank" title="تواصل معنا عبر الواتساب" class="whatsapp-pulse-btn fixed bottom-5 left-5 w-12 h-12 sm:w-14 sm:h-14 bg-[#25D366] border-2 border-slate-900 rounded-full flex items-center justify-center z-50 hover:scale-110 transition duration-200 shadow-xl">
+        <svg class="w-7 h-7 sm:w-8 sm:h-8 fill-white" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+        </svg>
+    </a>
+
+    <footer class="bg-white border-t border-slate-100 text-center py-6 px-4 text-xs font-bold text-slate-500">
+        <div class="flex items-center justify-center gap-2 mb-2 flex-wrap">
+            <span>{{ site_settings.get('footer_text', 'منصة إتقان الأكاديمية © 2023 - 2026') if site_settings else 'منصة إتقان الأكاديمية © 2023 - 2026' }}</span>
+            <span>•</span>
+            <a href="https://wa.me/{{ wa_num }}" target="_blank" class="text-emerald-600 hover:underline flex items-center gap-1 font-black">
+                <svg class="w-4 h-4 fill-[#25D366]" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                <span>خدمة الطلاب عبر الواتساب: {{ wa_num }}+</span>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileNav() {
+            const menu = document.getElementById('mobileNavMenu');
+            if (menu) {
+                menu.classList.toggle('hidden');
+            }
+        }
+
+        let currentSlide = 0;
+        const totalSlides = {{ (slider_ads|length) if slider_ads else 1 }};
+
+        function updateCarousel() {
+            const carousel = document.getElementById('projectCarousel');
+            if (carousel) {
+                carousel.style.transform = `translateX(${currentSlide * 100}%)`;
+            }
+            const dots = document.querySelectorAll('.slide-dot');
+            dots.forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.className = 'slide-dot w-2.5 h-2.5 rounded-full bg-amber-400 cursor-pointer transition';
+                } else {
+                    dot.className = 'slide-dot w-2.5 h-2.5 rounded-full bg-white/40 cursor-pointer transition';
+                }
+            });
+        }
+
+        function nextSlide() {
+            if (totalSlides <= 1) return;
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            if (totalSlides <= 1) return;
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+
+        function goToSlide(idx) {
+            currentSlide = idx;
+            updateCarousel();
+        }
+
+        setInterval(() => {
+            nextSlide();
+        }, 4000);
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                if (splash) {
+                    splash.style.opacity = '0';
+                    splash.style.transform = 'scale(1.05)';
+                    setTimeout(() => splash.style.display = 'none', 500);
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

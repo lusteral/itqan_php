@@ -1,0 +1,8 @@
+# منع الوصول المباشر لملفات الفيديو والـ PDF
+<FilesMatch "\.(mp4|pdf)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# منع عرض قائمة الملفات إذا فتح الشخص المجلد مباشرة
+Options -Indexes
